@@ -1,0 +1,68 @@
+﻿@model DataCollection<ProductDto>
+@{
+    ViewData["Title"] = "Productos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Página principal del listado de sus productos</p>
+
+<div class="form-group text-right">
+    <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Nuevo producto</a>
+</div>
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>¿Habilitado?</th>
+            <th style="width:140px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Items != null)
+        {
+            @foreach (var item in Model.Items)
+            {
+            <tr>
+                <td>
+                    <a href="~/product/detail/@item.ProductId">@item.Name</a>
+                </td>
+                <td>@item.Description</td>
+                <td>@(item.IsEnabled ? "Si" : "No")</td>
+                <td class="text-center">
+                    <a href="~/product/stores/@item.ProductId">Ver tiendas</a>
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="7" class="text-center">
+                Se han encontrado @Model.TotalItems registro(s)
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        @if (Model.PageNumber > 1)
+        {
+            <li class="page-item"><a class="page-link" href="~/product?page=@(Model.PageNumber - 1)">Anterior</a></li>
+        }
+
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")"><a class="page-link" href="~/product?page=@i">@i</a></li>
+        }
+
+        @if (Model.PageNumber < Model.TotalPages)
+        {
+            <li class="page-item"><a class="page-link" href="~/product?page=@(Model.PageNumber + 1)">Siguiente</a></li>
+        }
+    </ul>
+</nav>

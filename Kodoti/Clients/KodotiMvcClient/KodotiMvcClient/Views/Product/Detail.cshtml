@@ -1,0 +1,29 @@
+﻿@model ProductDto
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Detalle del producto solicitado</p>
+
+<h4>Descripción</h4>
+<p>@Model.Description</p>
+
+<h4>Estado del producto</h4>
+<p>El producto se encuentra @(Model.IsEnabled ? "habilitado" : "inhabilitado").</p>
+
+<h4>Tiendas asociadas</h4>
+@if (Model.ProductStores != null && Model.ProductStores.Any())
+{
+    <ul class="list-group">
+        @foreach (var item in Model.ProductStores)
+        {
+            <li class="list-group-item">@item.Store.Name</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No hay tiendas relacionadas</p>
+}

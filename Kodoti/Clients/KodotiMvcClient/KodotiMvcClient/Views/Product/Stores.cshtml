@@ -1,0 +1,21 @@
+﻿@model IEnumerable<StoreDto>
+@{
+    ViewData["Title"] = "Tiendas asociadas";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>Tiendas relaccionadas al producto escogido</p>
+
+@if (Model != null && Model.Any())
+{
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item">@item.Name</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No hay tiendas relacionadas</p>
+}
